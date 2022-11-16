@@ -15,7 +15,9 @@ const routeLinks: RouterLink[] = characterRoute
 <template>
   <h1>Personajes</h1>
   <NavBar :show-icon="false" :links="routeLinks" />
-  <RouterView />
+  <Suspense>
+    <RouterView />
+  </Suspense>
 </template>
 
 <style lang="scss" scoped></style>
