@@ -11,7 +11,7 @@ export const characterRoute: RouteRecordRaw = {
   component: CharacterLayout,
   children: [
     {
-      path: 'by/id',
+      path: 'by/:id',
       name: 'characters-id',
       props: { title: 'Personaje por Id', visible: false },
       component: CharacterId,

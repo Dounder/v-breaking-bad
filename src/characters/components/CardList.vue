@@ -1,36 +1,14 @@
 <script setup lang="ts">
-import breakingBadApi from '@/api/breakingBadApi';
-import { useQuery } from '@tanstack/vue-query';
-import type { Character } from '../interfaces/character';
 import CharacterCard from '@/characters/components/CharacterCard.vue';
+import type { Character } from '@/characters/interfaces/character';
 
-const getCharactersSlow = async (): Promise<Character[]> => {
-  return new Promise((resolve) => {
-    setTimeout(async () => {
-      const { data } = await breakingBadApi.get<Character[]>('/characters');
-      resolve(
-        data.filter((character) => ![14, 17, 39].includes(character.char_id))
-      );
-    }, 1000);
-  });
-};
-
-const {
-  isLoading,
-  isError,
-  data: characters,
-  error,
-} = useQuery(['characters'], getCharactersSlow, {
-  cacheTime: 1000 * 60,
-  refetchOnReconnect: 'always',
-});
+const props = defineProps<{ characters: Character[] }>();
 </script>
 
 <template>
-  <h1 v-if="isLoading">Loading...</h1>
-  <section class="card-list" v-else>
+  <section class="card-list">
     <CharacterCard
-      v-for="character of characters"
+      v-for="character of props.characters"
       :key="character.char_id"
       :character="character"
     />
